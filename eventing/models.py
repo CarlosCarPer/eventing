@@ -10,8 +10,8 @@ class Events(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     dateday = models.DateTimeField()
-    start_hour = models.TimeField()
-    end_hour = models.TimeField()
+    start_hour = models.TimeField(null=True)
+    end_hour = models.TimeField(null=True)
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
@@ -43,3 +44,12 @@ class LoginView(APIView):
             return Response({"token": user.auth_token.key})
         else:
             return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+
+def signinconfirm():
+    send_mail(
+        "Eventing",
+        "Confirma tu cuenta clickando en el siguinte enlace:.",
+        "carlos.carraper@gmail.com",
+        ["carcisco97@gmail.com"],
+        fail_silently=False,
+        )

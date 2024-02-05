@@ -4,7 +4,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: cimg/python:3.12.1
-      - image: cimg/postgres:12.17.0
+      - image: cimg/postgres:12.17
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: eventing
@@ -18,7 +18,7 @@ jobs:
 
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client
-      
+
       # Download and cache dependencies
       - restore_cache:
           keys:

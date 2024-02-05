@@ -1,9 +1,14 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
       # specify the version you desire here
       - image: cimg/python:3.12.1
+      - image: cimg/postgres:12.17.0
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: eventing
+          POSTGRES_HOST: 127.0.0.1
 
 
     working_directory: ~/eventing
@@ -11,6 +16,9 @@ jobs:
     steps:
       - checkout
 
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client
+      
       # Download and cache dependencies
       - restore_cache:
           keys:

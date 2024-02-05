@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'eventing',
     'rest_framework',
     'rest_framework.authtoken'
@@ -93,7 +94,7 @@ DATABASES = {
 }
 
 
-AUTH_USER_MODEL = "eventing.Users"
+AUTH_USER_MODEL = "accounts.Users"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

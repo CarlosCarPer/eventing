@@ -14,11 +14,12 @@ class TestEvents(APITestCase):
 
     @staticmethod
     def setup_user():
-        User = get_user_model()
-        return User.objects.create_user(
+        user = get_user_model()
+        return user.objects.create_user(
             'test',
             email='testuser@test.com',
-            password='test'
+            password='test',
+            is_active=True
         )
     
     def test_list(self):

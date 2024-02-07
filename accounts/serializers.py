@@ -5,6 +5,7 @@ from eventing.serializers import EventsSerializer
 
 class UsersSerializer(serializers.ModelSerializer):
     events = EventsSerializer(many=True,read_only=True)
+    my_events = EventsSerializer(many=True,read_only=True)
 
     class Meta:
         model = Users

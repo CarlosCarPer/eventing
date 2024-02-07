@@ -29,6 +29,16 @@ class UsersDetail(RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
 
+    def update(self, request, pk):
+        if request.user.pk != pk:
+            return Response('You are not allowed to update other user profile',403)
+        return super().delete(request, pk)
+
+    def delete(self, request, pk):
+        if request.user.pk != pk:
+            return Response('You are not allowed to delete other user account',403)
+        return super().delete(request, pk)
+
 class LoginView(APIView):
     permission_classes = ()
 

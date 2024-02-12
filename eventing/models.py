@@ -13,4 +13,11 @@ class Events(models.Model):
     def __str__(self):
         return self.title
 
+class Tasks(models.Model):
+    title = models.CharField(max_length=50)
+    done = models.BooleanField(default=False)
+    event = models.ForeignKey(Events,related_name='tasks',on_delete=models.CASCADE)
+    members = models.ManyToManyField(Users,related_name='members',blank=True)
 
+    def __str__(self):
+        return self.title

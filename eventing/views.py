@@ -1,10 +1,10 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import BasePermission
 
-from .serializers import EventsSerializer
-from .models import Events
+from .serializers import EventsSerializer, TasksSerializer
+from .models import Events, Tasks
 
 def index(request):
     return Response("Hello, world. You're at the polls index.")
@@ -17,6 +17,16 @@ class IsAuthenticatedAndMember(BasePermission):
 
     def has_object_permission(self, request, _, obj):
         return request.user in obj.members.all()
+
+class TasksPermissions(BasePermission):
+    message = 'You must be a member of the task event.'
+
+    def has_permission(self, request, _):
+        return request.user and request.user.is_authenticated
+
+    def has_object_permission(self, request, _, obj):
+        return request.user in obj.event.members.all()
+
 
 class EventsList(ListCreateAPIView):
     serializer_class = EventsSerializer
@@ -52,3 +62,16 @@ def remove_members(request, pk, mpk):
         event.save()
         return Response()
     return Response()
+
+class EventsTasks(CreateAPIView):
+    queryset = Events.objects.all()
+    serializer_class = TasksSerializer
+    permission_classes = (IsAuthenticatedAndMember,)
+
+    def perform_create(self, serializer):
+        serializer.save(event=self.get_object())
+
+class TaskDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Tasks.objects.all()
+    serializer_class = TasksSerializer
+    permission_classes = (TasksPermissions,)
